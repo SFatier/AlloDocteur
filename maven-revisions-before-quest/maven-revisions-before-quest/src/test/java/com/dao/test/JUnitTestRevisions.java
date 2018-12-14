@@ -9,6 +9,10 @@ import com.cours.revisions.entities.Personne;
 import com.cours.revisions.factory.SingletonFactory;
 import com.cours.revisions.helper.PersonneHelper;
 import com.cours.revisions.singletons.AbstractStatisticSingleton;
+import com.cours.revisions.singletons.CsvStatisticSingleton;
+import com.cours.revisions.singletons.JsonStatisticSingleton;
+import com.cours.revisions.utils.Constants;
+
 import java.util.List;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -27,28 +31,30 @@ public class JUnitTestRevisions {
 
     @BeforeClass
     public static void init() throws Exception {
-        // configuration de l'application
+    	   singletonCsv = CsvStatisticSingleton.getInstance();
+    	   singletonJson = JsonStatisticSingleton.getInstance();
+    	   personneHelper = new PersonneHelper(Constants.PERSONNES_CSV_PATH_FILE, "CSV");
     }
 
     @Test
     public void testJUnitAllCalculMoyenneEcartType() {
         log.debug("Entree de la methode");
         testJUnitCalculMoyenneEcartType(singletonCsv);
-        testJUnitCalculMoyenneEcartType(singletonXml);
+        //testJUnitCalculMoyenneEcartType(singletonXml);
         testJUnitCalculMoyenneEcartType(singletonJson);
         log.debug("Sortie de la methode");
     }
-
+    
     public void testJUnitCalculMoyenneEcartType(AbstractStatisticSingleton singleton) {
-        log.debug("Entree de la methode");
+    	log.debug("Entree de la methode");
         log.debug("difference moyenne poids : " + Math.abs(68.6500 - singleton.getMoyennePoids()));
         log.debug("difference ecartType poids : " + Math.abs(17.4707 - singleton.getEcartTypePoids()));
         Assert.assertTrue(Math.abs(68.6500 - singleton.getMoyennePoids()) < 1e-4);
         Assert.assertTrue(Math.abs(17.4707 - singleton.getEcartTypePoids()) < 1e-4);
-        log.debug("difference moyenne taille : " + Math.abs(166.0500 - singleton.getMoyennePoids()));
-        log.debug("difference ecartType taille : " + Math.abs(17.6138 - singleton.getEcartTypePoids()));
-        Assert.assertTrue(Math.abs(166.0500 - singleton.getMoyennePoids()) < 1e-4);
-        Assert.assertTrue(Math.abs(17.6138 - singleton.getEcartTypePoids()) < 1e-4);
+        log.debug("difference moyenne taille : " + Math.abs(166.0500 - singleton.getMoyenneTaille()));
+        log.debug("difference ecartType taille : " + Math.abs(17.6138 - singleton.getEcartTypeTaille()));
+        Assert.assertTrue(Math.abs(166.0500 - singleton.getMoyenneTaille()) < 1e-4);
+        Assert.assertTrue(Math.abs(17.6138 - singleton.getEcartTypeTaille()) < 1e-4);
         log.debug("Sortie de la methode");
     }
 

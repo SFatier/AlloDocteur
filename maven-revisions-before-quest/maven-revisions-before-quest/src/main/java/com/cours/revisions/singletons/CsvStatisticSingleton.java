@@ -21,7 +21,7 @@ public class CsvStatisticSingleton  extends AbstractStatisticSingleton {
 	
 	private ICSV _service; 
 	
-    final static String personnesCsvPathFile = "C:\\Users\\sigt_sf\\Documents\\Jav5\\maven-revisions-before-quest\\maven-revisions-before-quest\\personnesCsv.csv";    
+    final static String personnesCsvPathFile = "C:\\Users\\sigt_sf\\Documents\\GitHub\\AlloDocteur\\maven-revisions-before-quest\\maven-revisions-before-quest\\personnesCsv.csv";    
    
 	private List<Double> lstMoyennePoids;
 	private List<Double> lstMoyenneTaille;
@@ -29,7 +29,7 @@ public class CsvStatisticSingleton  extends AbstractStatisticSingleton {
 	
     private CsvStatisticSingleton() 
     {  
-    	_service = new PersonneHelper(personnesCsvPathFile);
+    	_service = new PersonneHelper(personnesCsvPathFile, "CSV");
     	extractPersonnesDatas();
     }
      
@@ -54,6 +54,7 @@ public class CsvStatisticSingleton  extends AbstractStatisticSingleton {
     @Override
     protected void extractPersonnesDatas() {  
     	personnes = _service.createListPersonnes();
+    	
     	lstMoyennePoids = new ArrayList<Double>();
     	for ( Personne personne : personnes) { 
     		lstMoyennePoids.add(personne.getPoids());

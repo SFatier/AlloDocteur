@@ -7,6 +7,7 @@ package com.cours.revisions.main;
 
 import com.cours.revisions.singletons.AbstractStatisticSingleton;
 import com.cours.revisions.singletons.CsvStatisticSingleton;
+import com.cours.revisions.singletons.JsonStatisticSingleton;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -26,7 +27,19 @@ public class MainRevisions {
 
         AbstractStatisticSingleton mySingleton = CsvStatisticSingleton.getInstance();
  
-        System.out.println(mySingleton.getPersonnes());  
+        System.out.println("CSV => \n" );  
+        
+        System.out.println("moyenne poids : " + mySingleton.getMoyennePoids());
+        System.out.println("ecartType poids : " + mySingleton.getEcartTypePoids());
+        
+
+        System.out.println("moyenne taille : " + mySingleton.getMoyenneTaille());
+        System.out.println("ecartType taille : " + mySingleton.getEcartTypeTaille() + "\n");
+        
+        
+        mySingleton = JsonStatisticSingleton.getInstance();
+       
+        System.out.println("JSON => \n" );  
         
         System.out.println("moyenne poids : " + mySingleton.getMoyennePoids());
         System.out.println("ecartType poids : " + mySingleton.getEcartTypePoids());
@@ -34,6 +47,5 @@ public class MainRevisions {
 
         System.out.println("moyenne taille : " + mySingleton.getMoyenneTaille());
         System.out.println("ecartType taille : " + mySingleton.getEcartTypeTaille());
-       
     }
 }
