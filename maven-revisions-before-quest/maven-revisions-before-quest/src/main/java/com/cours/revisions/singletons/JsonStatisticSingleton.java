@@ -6,13 +6,12 @@
 package com.cours.revisions.singletons;
 
 import com.cours.revisions.entities.Personne;
-import com.cours.revisions.helper.PersonneHelper;
-import com.cours.revisions.interfaces.IJSON;
-
+import java.io.FileReader;
 import java.util.ArrayList;
 import java.util.List;
-
+import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
 
 /**
  *
@@ -20,14 +19,13 @@ import org.json.simple.JSONObject;
  */
 public class JsonStatisticSingleton extends AbstractStatisticSingleton {
 
-	private IJSON _service; 
+	//private IJSON _service; 
 	private List<Double> lstMoyennePoids;
 	private List<Double> lstMoyenneTaille;
 
     final String personnesJsonPathFile = "C:\\Users\\sigt_sf\\Documents\\GitHub\\AlloDocteur\\maven-revisions-before-quest\\maven-revisions-before-quest\\personnesJson.json";
 
     private JsonStatisticSingleton() {
-    	_service = new PersonneHelper(personnesJsonPathFile, "JSON");
     	extractPersonnesDatas();
     }
     
@@ -41,14 +39,34 @@ public class JsonStatisticSingleton extends AbstractStatisticSingleton {
         return SingletonHolder.instance;
     }
 
-    public Personne createPersonneWithFileObject(JSONObject jsonObjectPerson) {
-        return null;
+    public Personne createPersonneWithFileObject(JSONObject jsonObjectPerson) {        
+        Personne personne = new Personne();
+        personne.setIdPersonne(Integer.parseInt(String.valueOf(jsonObjectPerson.get("id"))));
+        personne.setPoids(Double.parseDouble(String.valueOf(jsonObjectPerson.get("poids"))));
+        personne.setTaille(Double.parseDouble(String.valueOf( jsonObjectPerson.get("taille"))));        
+        return personne;
     }
 
     @Override
-    protected void extractPersonnesDatas() {
-    	personnes = _service.createListPersonnes();
+    protected void extractPersonnesDatas() {    	
+    	JSONParser parser = new JSONParser();
+		 
+        try { 
+            Object obj = parser.parse(new FileReader(personnesJsonPathFile));
+          	            
+            JSONObject jsonObjectBase = (JSONObject) obj;
+            JSONArray personList = (JSONArray) jsonObjectBase.get("personnes");
+                                   
+            for (Object o : personList) {            	
+                JSONObject jsonObjectPerson = (JSONObject) o;
+                personnes.add(createPersonneWithFileObject(jsonObjectPerson));
+            }	            
+            	            
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     	
+        
     	lstMoyennePoids = new ArrayList<Double>();
     	for ( Personne personne : personnes) { 
     		lstMoyennePoids.add(personne.getPoids());

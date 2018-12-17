@@ -6,12 +6,10 @@ package com.dao.test;
  * and open the template in the editor.
  */
 import com.cours.revisions.entities.Personne;
-import com.cours.revisions.factory.SingletonFactory;
 import com.cours.revisions.helper.PersonneHelper;
 import com.cours.revisions.singletons.AbstractStatisticSingleton;
 import com.cours.revisions.singletons.CsvStatisticSingleton;
 import com.cours.revisions.singletons.JsonStatisticSingleton;
-import com.cours.revisions.utils.Constants;
 
 import java.util.List;
 import org.apache.commons.logging.Log;
@@ -33,7 +31,6 @@ public class JUnitTestRevisions {
     public static void init() throws Exception {
     	   singletonCsv = CsvStatisticSingleton.getInstance();
     	   singletonJson = JsonStatisticSingleton.getInstance();
-    	   personneHelper = new PersonneHelper(Constants.PERSONNES_CSV_PATH_FILE, "CSV");
     }
 
     @Test

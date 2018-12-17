@@ -5,21 +5,20 @@
  */
 package com.cours.revisions.singletons;
 
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
 import com.cours.revisions.entities.Personne;
-import com.cours.revisions.helper.PersonneHelper;
-import com.cours.revisions.interfaces.ICSV;
 
 /**
  *
  * @author elhad
  */
 public class CsvStatisticSingleton  extends AbstractStatisticSingleton {
-
 	
-	private ICSV _service; 
 	
     final static String personnesCsvPathFile = "C:\\Users\\sigt_sf\\Documents\\GitHub\\AlloDocteur\\maven-revisions-before-quest\\maven-revisions-before-quest\\personnesCsv.csv";    
    
@@ -29,7 +28,6 @@ public class CsvStatisticSingleton  extends AbstractStatisticSingleton {
 	
     private CsvStatisticSingleton() 
     {  
-    	_service = new PersonneHelper(personnesCsvPathFile, "CSV");
     	extractPersonnesDatas();
     }
      
@@ -53,7 +51,35 @@ public class CsvStatisticSingleton  extends AbstractStatisticSingleton {
 
     @Override
     protected void extractPersonnesDatas() {  
-    	personnes = _service.createListPersonnes();
+    	String line = "";       
+		
+        BufferedReader br = null;
+        try {
+        	br= new BufferedReader(new FileReader(personnesCsvPathFile));
+
+            while ((line = br.readLine()) != null) {
+
+            	Personne personne = new Personne();
+            	   String[] p = line.split(";");
+            	   if (!line.equals("﻿idPersonne;Prenom;Nom;Poids;Taille;Rue;Ville;Code Postal" )) {      	        
+	                personne.setIdPersonne(Integer.parseInt(p[0]));
+	                personne.setPoids(Double.parseDouble(p[3]));
+	                personne.setTaille(Double.parseDouble(p[4]));
+	                personnes.add(personne);
+            	}
+            }
+
+        } catch (IOException e) {
+            e.printStackTrace();          
+        } finally {
+            if (br != null) {
+                try {
+                    br.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
     	
     	lstMoyennePoids = new ArrayList<Double>();
     	for ( Personne personne : personnes) { 
