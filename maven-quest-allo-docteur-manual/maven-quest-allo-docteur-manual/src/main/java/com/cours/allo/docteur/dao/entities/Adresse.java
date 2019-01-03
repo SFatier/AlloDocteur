@@ -123,4 +123,36 @@ public class Adresse {
     	return "Rue: "+ rue + ", Code postal: " + codePostal + ", ville: " + ville + ", pays: "+ pays +", principale" + principale + ",version: " + version + ",idUtilisateur: " + idUtilisateur;
  
    }
+    
+    //Que sur idUtilisateur et idAdresse
+    @Override
+     public boolean equals(Object obj) {
+     	if (this == obj)
+     		return true;
+     	
+     	if (obj == null)
+     		return false;
+     
+     	if (getClass() != obj.getClass())
+     		return false;
+
+     Adresse other = (Adresse) obj;
+     
+     if (idAdresse != other.idAdresse)
+     	return false;
+     
+     if (idUtilisateur != other.idUtilisateur)
+      	return false;
+     
+     return false;
+    }
+
+    //Que sur idUtilisateur et idAdresse
+    @Override    
+     public int hashCode() { 
+ 	   int hash = 1;
+       hash = hash * 17 + idUtilisateur;
+       hash = hash * 17 + idAdresse;
+ 	   return hash;
+     } 
 }

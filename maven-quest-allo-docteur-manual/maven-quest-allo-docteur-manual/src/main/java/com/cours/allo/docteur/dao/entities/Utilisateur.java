@@ -188,7 +188,10 @@ public class Utilisateur {
     			+   ", dateNaissance: "+ dateNaissance + ", dateCreation: " + dateCreation + ", dateModification: " + dateModification + ", actif: " + actif + ", marquerEffacer: "+ marquerEffacer ;
  
    }
-    /*@Override
+    
+    
+    //Que sur idUtilisateur et idAdresse
+   @Override
     public boolean equals(Object obj) {
     	if (this == obj)
     		return true;
@@ -200,68 +203,28 @@ public class Utilisateur {
     		return false;
 
     Utilisateur other = (Utilisateur) obj;
-
-    if (adulte != other.adulte)
-    31.
-    return false;
-    32.
-    if (dateNaiss == null) {
-    33.
-    if (other.dateNaiss != null)
-    34.
-    return false;
-    35.
-    } else if (!dateNaiss.equals(other.dateNaiss))
-    36.
-    return false;
-    37.
-    if (id != other.id)
-    38.
-    return false;
-    39.
-    if (nom == null) {
-    40.
-    if (other.nom != null)
-    41.
-    return false;
-    42.
-    } else if (!nom.equals(other.nom))
-    43.
-    return false;
-    44.
-    if (prenom == null) {
-    45.
-    if (other.prenom != null)
-    46.
-    return false;
-    47.
-    } else if (!prenom.equals(other.prenom))
-    48.
-    return false;
-    49.
-    return true;
-    50.
-    }*/
     
-    /*@Override
-    12.
-    public int hashCode() {
-    13.
-    final int prime = 31;
-    14.
-    int result = 1;
-    15.
-    result = prime * result + (adulte ? 1231 : 1237);
-    16.
-    result = prime * result + ((dateNaiss == null) ? 0 : dateNaiss.hashCode());
-    17.
-    result = prime * result + (int) (id ^ (id >>> 32));
-    18.
-    result = prime * result + ((nom == null) ? 0 : nom.hashCode());
-    19.
-    result = prime * result + ((prenom == null) ? 0 : prenom.hashCode());
-    20.
-    return result;
-    21.
-    } /*
+    if (idUtilisateur != other.idUtilisateur)
+    	return false;
+    
+    for(int i =0; i < adresses.size(); i++){
+    	Adresse a = adresses.get(i);
+	    if (a.getIdUtilisateur() != other.getIdUtilisateur())
+	    	return false;	   
+	    }
+    
+    return false;
+   }
+
+   //Que sur idUtilisateur et idAdresse
+   @Override    
+    public int hashCode() { 
+	   int hash = 1;
+       hash = hash * 17 + idUtilisateur;
+       for(int i =0; i < adresses.size(); i++){
+       	Adresse a = adresses.get(i);
+       	hash = hash * 17 + a.getIdAdresse();
+      }
+	  return hash;
+    } 
 }
