@@ -6,6 +6,9 @@
 package com.cours.revisions.factory;
 
 import com.cours.revisions.singletons.AbstractStatisticSingleton;
+import com.cours.revisions.singletons.CsvStatisticSingleton;
+import com.cours.revisions.singletons.JsonStatisticSingleton;
+
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
@@ -28,6 +31,19 @@ public class SingletonFactory {
      * @return AbstractStatisticSingleton
      */
     public static AbstractStatisticSingleton getFactory(FactorySingletonType type) {
-        return null;
+    	AbstractStatisticSingleton mySingleton = null;
+    	
+    	if (type.equals(FactorySingletonType.CSV_SINGLETON_FACTORY)) {
+    		log.info("Singleton CSV activé");
+    		mySingleton = CsvStatisticSingleton.getInstance();    	
+    	}else if (type.equals(FactorySingletonType.XML_SINGLETON_FACTORY)) {
+    		log.info("Singleton XML activé");
+    		//mySingleton = XmlStatisticSingleton.getInstance(); 
+    	}else if (type.equals(FactorySingletonType.JSON_SINGLETON_FACTORY)) {
+    		log.info("Singleton JSON activé");
+    		mySingleton = JsonStatisticSingleton.getInstance(); 
+    	}    	
+    	
+        return mySingleton;
     }
 }

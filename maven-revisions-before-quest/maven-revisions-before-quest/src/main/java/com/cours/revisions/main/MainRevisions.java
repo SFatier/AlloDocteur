@@ -8,6 +8,7 @@ package com.cours.revisions.main;
 import com.cours.revisions.singletons.AbstractStatisticSingleton;
 import com.cours.revisions.singletons.CsvStatisticSingleton;
 import com.cours.revisions.singletons.JsonStatisticSingleton;
+import com.cours.revisions.singletons.XmlStatisticSingleton;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -40,6 +41,17 @@ public class MainRevisions {
         mySingleton = JsonStatisticSingleton.getInstance();
        
         System.out.println("JSON => \n" );  
+        
+        System.out.println("moyenne poids : " + mySingleton.getMoyennePoids());
+        System.out.println("ecartType poids : " + mySingleton.getEcartTypePoids());
+        
+
+        System.out.println("moyenne taille : " + mySingleton.getMoyenneTaille());
+        System.out.println("ecartType taille : " + mySingleton.getEcartTypeTaille());
+        
+        mySingleton = XmlStatisticSingleton.getInstance();
+        
+        System.out.println("XML => \n" );  
         
         System.out.println("moyenne poids : " + mySingleton.getMoyennePoids());
         System.out.println("ecartType poids : " + mySingleton.getEcartTypePoids());

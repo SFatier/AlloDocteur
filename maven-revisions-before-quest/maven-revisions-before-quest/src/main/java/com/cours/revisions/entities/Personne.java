@@ -1,6 +1,5 @@
 package com.cours.revisions.entities;
 
-import com.cours.revisions.utils.Constants;
 
 /**
  *

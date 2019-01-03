@@ -10,6 +10,7 @@ import com.cours.revisions.helper.PersonneHelper;
 import com.cours.revisions.singletons.AbstractStatisticSingleton;
 import com.cours.revisions.singletons.CsvStatisticSingleton;
 import com.cours.revisions.singletons.JsonStatisticSingleton;
+import com.cours.revisions.singletons.XmlStatisticSingleton;
 
 import java.util.List;
 import org.apache.commons.logging.Log;
@@ -30,6 +31,7 @@ public class JUnitTestRevisions {
     @BeforeClass
     public static void init() throws Exception {
     	   singletonCsv = CsvStatisticSingleton.getInstance();
+    	   singletonXml = XmlStatisticSingleton.getInstance();
     	   singletonJson = JsonStatisticSingleton.getInstance();
     }
 
@@ -37,7 +39,7 @@ public class JUnitTestRevisions {
     public void testJUnitAllCalculMoyenneEcartType() {
         log.debug("Entree de la methode");
         testJUnitCalculMoyenneEcartType(singletonCsv);
-        //testJUnitCalculMoyenneEcartType(singletonXml);
+        testJUnitCalculMoyenneEcartType(singletonXml);
         testJUnitCalculMoyenneEcartType(singletonJson);
         log.debug("Sortie de la methode");
     }
