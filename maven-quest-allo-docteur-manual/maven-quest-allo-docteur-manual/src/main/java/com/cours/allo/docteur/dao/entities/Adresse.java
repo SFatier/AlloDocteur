@@ -118,4 +118,9 @@ public class Adresse {
     public Integer getIdUtilisateur() {
         return idUtilisateur;
     }
+    
+    public String toString() {
+    	return "Rue: "+ rue + ", Code postal: " + codePostal + ", ville: " + ville + ", pays: "+ pays +", principale" + principale + ",version: " + version + ",idUtilisateur: " + idUtilisateur;
+ 
+   }
 }
