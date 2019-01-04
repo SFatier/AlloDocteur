@@ -7,6 +7,7 @@ package com.cours.allo.docteur.factory;
 
 import com.cours.allo.docteur.dao.IAdresseDao;
 import com.cours.allo.docteur.dao.IUtilisateurDao;
+
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
@@ -35,6 +36,19 @@ public abstract class AbstractDaoFactory {
      * @return AbstractDaoFactory
      */
     public static AbstractDaoFactory getFactory(FactoryDaoType daoType) {
-        return null;
+    	AbstractDaoFactory myDaoFactory = null;
+    	
+    	if (daoType.equals(FactoryDaoType.MANUAL_ARRAY_DAO_FACTORY)) {
+    		log.info("ManualArrayDaoFactory activé");
+    		myDaoFactory =  ManualArrayDaoFactory.getInstance();
+    	}else if (daoType.equals(FactoryDaoType.MANUAL_LIST_DAO_FACTORY)) {
+    		log.info("ManualListDaoFactory activé");
+    		myDaoFactory = ManualListDaoFactory.getInstance(); 
+    	}else if (daoType.equals(FactoryDaoType.MANUAL_MAP_DAO_FACTORY)) {
+    		log.info("ManualMapDaoFactory activé");
+    		myDaoFactory = ManualMapDaoFactory.getInstance(); 
+    	}    	
+    	
+        return myDaoFactory;
     }
 }
