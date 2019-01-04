@@ -9,6 +9,8 @@ import com.cours.allo.docteur.dao.DataSource;
 import com.cours.allo.docteur.dao.IUtilisateurDao;
 import com.cours.allo.docteur.dao.entities.Adresse;
 import com.cours.allo.docteur.dao.entities.Utilisateur;
+import com.cours.allo.docteur.factory.AbstractDaoFactory;
+import com.cours.allo.docteur.factory.ManualListDaoFactory;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -23,7 +25,9 @@ import org.apache.commons.logging.LogFactory;
 public class ManualListUtilisateurDao extends AbstractListDao<Utilisateur> implements IUtilisateurDao {
 
     private static final Log log = LogFactory.getLog(ManualListUtilisateurDao.class);
-
+    private  AbstractDaoFactory abstractListDao =  ManualListDaoFactory.getInstance();
+    
+    
     private ManualListUtilisateurDao() {
         super(Utilisateur.class, DataSource.getInstance().getUtilisateursListDataSource());
     }
@@ -121,9 +125,18 @@ public class ManualListUtilisateurDao extends AbstractListDao<Utilisateur> imple
     @Override
     public Utilisateur createUtilisateur(Utilisateur user) {
     	try {
+    		List<Adresse> lst_adresse = abstractListDao.getAdresseDao().findAllAdresses();    		
+    		user.setDateCreation(new Date());	            
+     		user.setDateModification(new Date());
+     		user.setVersion(1);
+     		for (int j = 0; j < user.getAdresses().size(); j++) {            			 
+     			Adresse a = lst_adresse.get(j);
+     			abstractListDao.getAdresseDao().createAdresse(a); 
+     		}     		
     		DataSource.getInstance().getUtilisateursListDataSource().add(user);
     		return user;
     	}catch(Exception ex) {
+    		log.error( "(Fonction createUtilisateur)" +  ex.getMessage());
     		return null;
     	}    
     }
@@ -132,7 +145,8 @@ public class ManualListUtilisateurDao extends AbstractListDao<Utilisateur> imple
     public Utilisateur updateUtilisateur(Utilisateur user) {
     	
     	try {
-    		   
+    		List<Adresse> lst_adresse = abstractListDao.getAdresseDao().findAllAdresses();    		
+    		
     		for(int i =0; i < DataSource.getInstance().getUtilisateursListDataSource().size(); i++){
             	Utilisateur u = DataSource.getInstance().getUtilisateursListDataSource().get(i);
             	 if (u.getIdUtilisateur() == user.getIdUtilisateur()) {
@@ -142,33 +156,44 @@ public class ManualListUtilisateurDao extends AbstractListDao<Utilisateur> imple
 	            	u.setIdentifiant(user.getMotPasse());
 	            	u.setNumeroTelephone(user.getNumeroTelephone());
 	            	u.setDateNaissance(user.getDateNaissance());
-	            	u.setDateCreation(user.getDateCreation());
-		     		u.setDateModification(user.getDateModification());
+	            	u.setDateCreation(user.getDateCreation());	            
+		     		u.setDateModification(new Date());
 		     		u.setActif(user.isActif());
 		     		u.setMarquerEffacer(user.isMarquerEffacer());
-		     		u.setVersion(user.getVersion());
+		     		u.setVersion(u.getVersion() + 1);
+		     		for (int j = 0; j < user.getAdresses().size(); j++) {            			 
+		     			Adresse a = lst_adresse.get(j);
+		     			abstractListDao.getAdresseDao().updateAdresse(a); 
+		     		}   
 	            	break;
             	 }
          	 }      
     		    		   
 	    	return user;
     	}catch(Exception ex) {
+    		log.error( "(Fonction updateUtilisateur)" +  ex.getMessage());
     		return null;
     	}
     }
 
     @Override
     public boolean deleteUtilisateur(Utilisateur user) {
-    	try {    		
+    	try {    	
+    		
     		for(int i =0; i < DataSource.getInstance().getUtilisateursListDataSource().size(); i++){
                 	Utilisateur u = DataSource.getInstance().getUtilisateursListDataSource().get(i);
             	 if (u.getIdUtilisateur() == user.getIdUtilisateur())
+            		 for (int j = 0; j < u.getAdresses().size(); j++) {            			 
+            			 Adresse a = u.getAdresses().get(j);
+            			 abstractListDao.getAdresseDao().deleteAdresse(a); 
+            		 }
             		 DataSource.getInstance().getUtilisateursListDataSource().remove(i);
             	 	break;
          	 }      	
         	
     		return true;
     	}catch(Exception ex) {
+    		log.error( "(Fonction deleteUtilisateur)" +  ex.getMessage());
     		return false;
     	}    
     }

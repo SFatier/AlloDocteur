@@ -8,7 +8,6 @@ package com.cours.allo.docteur.dao.manual.list.impl;
 import com.cours.allo.docteur.dao.DataSource;
 import com.cours.allo.docteur.dao.IAdresseDao;
 import com.cours.allo.docteur.dao.entities.Adresse;
-import com.cours.allo.docteur.dao.entities.Utilisateur;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -90,9 +89,11 @@ public class ManualListAdresseDao extends AbstractListDao<Adresse> implements IA
     @Override
     public Adresse createAdresse(Adresse adresse) {
     	try {
+    		adresse.setVersion(1);
     		DataSource.getInstance().getAdressesListDataSource().add(adresse);
     		return adresse;
     	}catch(Exception ex) {
+    		log.error( "(Fonction createAdresse)" +  ex.getMessage());
     		return null;
     	}    	       
     }
@@ -108,7 +109,7 @@ public class ManualListAdresseDao extends AbstractListDao<Adresse> implements IA
     	            	a.setCodePostal(adresse.getCodePostal());
     	            	a.setVille(adresse.getVille());
     	            	a.setPays(adresse.getPays());
-    	            	a.setVersion(adresse.getVersion());
+    	            	a.setVersion(a.getVersion() + 1);
     	            	a.setIdUtilisateur(adresse.getIdUtilisateur());
 	            	break;
             	 }
@@ -116,6 +117,8 @@ public class ManualListAdresseDao extends AbstractListDao<Adresse> implements IA
     		    		   
 	    	return adresse;
     	}catch(Exception ex) {
+    		
+    		log.error( "(Fonction updateAdresse)" +  ex.getMessage());
     		return null;
     	}
         
@@ -135,6 +138,7 @@ public class ManualListAdresseDao extends AbstractListDao<Adresse> implements IA
         	
     		return true;
     	}catch(Exception ex) {
+    		log.error( "(Fonction deleteAdresse)" +  ex.getMessage());
     		return false;
     	}    
     }
