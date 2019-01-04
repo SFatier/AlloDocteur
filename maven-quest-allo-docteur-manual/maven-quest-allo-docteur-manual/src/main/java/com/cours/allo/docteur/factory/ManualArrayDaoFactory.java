@@ -7,6 +7,9 @@ package com.cours.allo.docteur.factory;
 
 import com.cours.allo.docteur.dao.IAdresseDao;
 import com.cours.allo.docteur.dao.IUtilisateurDao;
+import com.cours.allo.docteur.dao.manual.array.impl.ManualArrayAdresseDao;
+import com.cours.allo.docteur.dao.manual.array.impl.ManualArrayUtilisateurDao;
+
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
@@ -22,8 +25,20 @@ public class ManualArrayDaoFactory extends AbstractDaoFactory {
 
     private ManualArrayDaoFactory() {
         log.debug("--> ************ Initialisation de " + ManualArrayDaoFactory.class.getSimpleName() + " ************");
+        utilisateurDao = ManualArrayUtilisateurDao.getInstance();
+        adresseDao = ManualArrayAdresseDao.getInstance();
     }
 
+    private static class SingletonHolder
+    {       
+        private final static ManualArrayDaoFactory instance = new ManualArrayDaoFactory();
+    }
+ 
+    public static ManualArrayDaoFactory getInstance()
+    {
+        return SingletonHolder.instance;
+    }
+    
     @Override
     public IUtilisateurDao getUtilisateurDao() {
         return utilisateurDao;

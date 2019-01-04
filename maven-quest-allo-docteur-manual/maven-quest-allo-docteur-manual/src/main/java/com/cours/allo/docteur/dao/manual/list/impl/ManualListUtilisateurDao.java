@@ -24,6 +24,16 @@ public class ManualListUtilisateurDao extends AbstractListDao<Utilisateur> imple
         super(Utilisateur.class, DataSource.getInstance().getUtilisateursListDataSource());
     }
 
+    private static class SingletonHolder
+    {       
+        private final static ManualListUtilisateurDao instance = new ManualListUtilisateurDao();
+    }
+ 
+    public static ManualListUtilisateurDao getInstance()
+    {
+        return SingletonHolder.instance;
+    }
+    
     @Override
     public List<Utilisateur> findAllUtilisateurs() {
         return null;

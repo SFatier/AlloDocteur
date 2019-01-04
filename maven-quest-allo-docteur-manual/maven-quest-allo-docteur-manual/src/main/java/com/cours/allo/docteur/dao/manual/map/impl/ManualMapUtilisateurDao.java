@@ -8,6 +8,7 @@ package com.cours.allo.docteur.dao.manual.map.impl;
 import com.cours.allo.docteur.dao.DataSource;
 import com.cours.allo.docteur.dao.IUtilisateurDao;
 import com.cours.allo.docteur.dao.entities.Utilisateur;
+
 import java.util.List;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -22,6 +23,16 @@ public class ManualMapUtilisateurDao extends AbstractMapDao<Utilisateur> impleme
 
     private ManualMapUtilisateurDao() {
         super(Utilisateur.class, DataSource.getInstance().getUtilisateursMapDataSource());
+    }
+    
+    private static class SingletonHolder
+    {       
+        private final static ManualMapUtilisateurDao instance = new ManualMapUtilisateurDao();
+    }
+ 
+    public static ManualMapUtilisateurDao getInstance()
+    {
+        return SingletonHolder.instance;
     }
 
     @Override

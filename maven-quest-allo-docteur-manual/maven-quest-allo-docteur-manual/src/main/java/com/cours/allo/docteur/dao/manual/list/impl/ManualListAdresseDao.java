@@ -8,6 +8,7 @@ package com.cours.allo.docteur.dao.manual.list.impl;
 import com.cours.allo.docteur.dao.DataSource;
 import com.cours.allo.docteur.dao.IAdresseDao;
 import com.cours.allo.docteur.dao.entities.Adresse;
+
 import java.util.List;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -22,6 +23,16 @@ public class ManualListAdresseDao extends AbstractListDao<Adresse> implements IA
 
     private ManualListAdresseDao() {
         super(Adresse.class, DataSource.getInstance().getAdressesListDataSource());
+    }
+    
+    private static class SingletonHolder
+    {       
+        private final static ManualListAdresseDao instance = new ManualListAdresseDao();
+    }
+ 
+    public static ManualListAdresseDao getInstance()
+    {
+        return SingletonHolder.instance;
     }
 
     @Override

@@ -8,6 +8,7 @@ package com.cours.allo.docteur.dao.manual.map.impl;
 import com.cours.allo.docteur.dao.DataSource;
 import com.cours.allo.docteur.dao.IAdresseDao;
 import com.cours.allo.docteur.dao.entities.Adresse;
+
 import java.util.List;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -22,6 +23,16 @@ public class ManualMapAdresseDao extends AbstractMapDao<Adresse> implements IAdr
 
     private ManualMapAdresseDao() {
         super(Adresse.class, DataSource.getInstance().getAdressesMapDataSource());
+    }
+    
+    private static class SingletonHolder
+    {       
+        private final static ManualMapAdresseDao instance = new ManualMapAdresseDao();
+    }
+ 
+    public static ManualMapAdresseDao getInstance()
+    {
+        return SingletonHolder.instance;
     }
 
     @Override

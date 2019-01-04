@@ -24,6 +24,16 @@ public class ManualArrayAdresseDao extends AbstractArrayDao<Adresse> implements 
         super(Adresse.class, DataSource.getInstance().getAdressesArrayDataSource());
     }
 
+    private static class SingletonHolder
+    {       
+        private final static ManualArrayAdresseDao instance = new ManualArrayAdresseDao();
+    }
+ 
+    public static ManualArrayAdresseDao getInstance()
+    {
+        return SingletonHolder.instance;
+    }
+    
     @Override
     public List<Adresse> findAllAdresses() {
         return null;

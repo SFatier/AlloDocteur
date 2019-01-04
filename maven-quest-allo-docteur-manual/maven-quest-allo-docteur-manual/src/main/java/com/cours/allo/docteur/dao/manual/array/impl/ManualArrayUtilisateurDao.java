@@ -24,6 +24,16 @@ public class ManualArrayUtilisateurDao extends AbstractArrayDao<Utilisateur> imp
         super(Utilisateur.class, DataSource.getInstance().getUtilisateursArrayDataSource());
     }
 
+    private static class SingletonHolder
+    {       
+        private final static ManualArrayUtilisateurDao instance = new ManualArrayUtilisateurDao();
+    }
+ 
+    public static ManualArrayUtilisateurDao getInstance()
+    {
+        return SingletonHolder.instance;
+    }
+    
     @Override
     public List<Utilisateur> findAllUtilisateurs() {
         return null;
