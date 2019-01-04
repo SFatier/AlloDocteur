@@ -13,7 +13,6 @@ import com.cours.allo.docteur.factory.ManualArrayDaoFactory;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Date;
 import java.util.List;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -25,7 +24,6 @@ import org.apache.commons.logging.LogFactory;
 public class ManualArrayAdresseDao extends AbstractArrayDao<Adresse> implements IAdresseDao {
 
     private static final Log log = LogFactory.getLog(ManualArrayAdresseDao.class);
-    private  AbstractDaoFactory abstractArrayDao =  ManualArrayDaoFactory.getInstance();
     private  Adresse[] lst_adresse =  DataSource.getInstance().getAdressesArrayDataSource() ;
     
     
